@@ -1,6 +1,6 @@
 module.exports = {
   context: __dirname,
-  entry: "./machine.js",
+  entry: "./js/main.js",
   output: {
     path: "./js",
     publicPath: "/js/",
@@ -8,5 +8,8 @@ module.exports = {
     devtoolModuleFilenameTemplate: '[resourcePath]',
     devtoolFallbackModuleFilenameTemplate: '[resourcePath]?[hash]'
   },
-  devtool: 'source-maps'
+  devtool: 'source-maps',
+  resolve: {
+   extensions: ["", ".js", ".jsx" ]
+ }
 };
