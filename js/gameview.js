@@ -35,7 +35,7 @@ GameView.prototype.start = function() {
 };
 
 GameView.prototype.addMusic = function() {
-  $('body').append('<embed src="music/background.mp3" autostart="true" loop="true" hidden="true">');
+  document.getElementById('music').play();
 };
 
 GameView.prototype.animate = function(time){

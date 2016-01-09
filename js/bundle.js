@@ -46,7 +46,7 @@
 
 	var Game = __webpack_require__(1),
 	    GameView = __webpack_require__(6);
-
+	
 	$(function() {
 	  var canvasEl = document.getElementById('main');
 	  canvasEl.width = Game.DIM_X;
@@ -65,22 +65,22 @@
 	    Ship = __webpack_require__(3),
 	    Score = __webpack_require__(8),
 	    Util = __webpack_require__(4);
-
-
+	
+	
 	var Game = function () {
 	  this.obstacles = [];
 	  this.ships = [];
 	  this.score = new Score({ center: [Game.DIM_X / 2, Game.DIM_Y / 2] });
 	  this.opposite = false;
-
+	
 	  this.addObstacles();
 	};
-
+	
 	Game.BG_COLOR = '#000000';
 	Game.DIM_X = 1200;
 	Game.DIM_Y = 700;
 	Game.FPS = 32;
-
+	
 	Game.prototype.add = function (object) {
 	  if (object instanceof Obstacle) {
 	    this.obstacles.push(object);
@@ -90,7 +90,7 @@
 	    this.score = object;
 	  }
 	};
-
+	
 	Game.prototype.reverse = function() {
 	  var that = this;
 	  this.opposite = this.opposite ? false : true;
@@ -98,12 +98,12 @@
 	    obstacle.opposite = that.opposite;
 	  });
 	};
-
+	
 	Game.prototype.musicBounce = function() {
 	  this.obstacles.forEach(function(obstacle) {
 	    obstacle.lineWidth += obstacle.radius / 30;
 	  });
-
+	
 	  var that = this;
 	  setTimeout(function() {
 	    that.obstacles.forEach(function(obstacle) {
@@ -111,51 +111,51 @@
 	    });
 	  }, 100);
 	};
-
+	
 	Game.prototype.addObstacles = function () {
 	  var that = this;
-
+	
 	  this.add(new Obstacle({
 	        game: that,
 	        center: [Game.DIM_X / 2, Game.DIM_Y / 2],
 	        opposite: that.opposite
 	  }));
 	};
-
+	
 	Game.prototype.addShip = function () {
 	   var ship = new Ship({
 	     game: this,
 	     center: [Game.DIM_X / 2, Game.DIM_Y / 2]
 	   });
-
+	
 	   this.add(ship);
-
+	
 	   return ship;
 	};
-
+	
 	Game.prototype.allObjects = function() {
 	  return [].concat(this.obstacles, this.ships);
 	};
-
+	
 	Game.prototype.moveObjects = function (delta) {
 	  this.allObjects().forEach(function (object) {
 	    object.move(delta);
 	  });
 	};
-
+	
 	Game.prototype.isOutOfBounds = function (radius) {
 	  var bound = Util.hypotenuse(Game.DIM_X, Game.DIM_Y) / 2;
-
+	
 	  return (radius > bound);
 	};
-
+	
 	Game.prototype.remove = function (object) {
 	  if (object instanceof Obstacle) {
 	    var idx = this.obstacles.indexOf(object);
 	    this.obstacles.splice(idx, 1);
 	  }
 	};
-
+	
 	Game.prototype.checkCollisions = function() {
 	  var that = this;
 	  this.obstacles.forEach(function(obstacle) {
@@ -167,25 +167,25 @@
 	    }
 	  });
 	};
-
+	
 	Game.prototype.step = function(delta) {
 	  this.score.increaseScore();
 	  this.moveObjects(delta);
 	  this.checkCollisions();
 	};
-
+	
 	Game.prototype.draw = function(ctx) {
 	  ctx.clearRect(0, 0, Game.DIM_X, Game.DIM_Y);
 	  ctx.fillStyle = 'rgba(0, 0, 0, 0.01)';
 	  ctx.fillRect(0, 0, Game.DIM_X, Game.DIM_Y);
-
+	
 	  this.allObjects().forEach(function (object) {
 	    object.draw(ctx);
 	  });
-
+	
 	  this.score.draw(ctx);
 	};
-
+	
 	module.exports = Game;
 
 
@@ -194,7 +194,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var Constants = __webpack_require__(7);
-
+	
 	var Obstacle = function(options) {
 	  this.radius = 4;
 	  this.center = options.center;
@@ -207,15 +207,15 @@
 	  this.color = Obstacle.COLORS[Math.floor(Math.random() * 3)];
 	  this.game = options.game;
 	};
-
+	
 	Obstacle.COLORS = ["#ffcbd3", "#996d73", "#fff7f8"];
-
+	
 	Obstacle.prototype.draw = function(ctx) {
 	  ctx.beginPath();
 	  ctx.arc(
 	    this.center[0], this.center[1], this.radius, this.startAngle, this.endAngle
 	  );
-
+	
 	  ctx.lineWidth = this.lineWidth;
 	  ctx.strokeStyle = this.color;
 	  ctx.shadowColor = '#999';
@@ -224,14 +224,14 @@
 	  ctx.shadowOffsetY = 15;
 	  ctx.stroke();
 	};
-
+	
 	Obstacle.prototype.move = function(timeDelta) {
 	  var radialScale = timeDelta / Constants.NORMAL_FRAME_TIME_DELTA;
-
+	
 	  this.radius += this.speed * radialScale;
 	  this.lineWidth += this.speed / 30 * radialScale;
 	  this.shadowBlur += (.1 * radialScale);
-
+	
 	  if (this.opposite) {
 	    this.startAngle -= .005;
 	    this.endAngle -= .005;
@@ -239,15 +239,15 @@
 	    this.startAngle += .005;
 	    this.endAngle += .005;
 	  }
-
+	
 	  if (this.game.isOutOfBounds(this.radius)) {
 	    this.game.remove(this);
 	  }
 	};
-
+	
 	Obstacle.prototype.collidedWith = function(ship) {
 	  var shipAngle = ship.angle();
-
+	
 	  shipAngle = this.startAngle > shipAngle ? shipAngle + 2 * Math.PI : shipAngle;
 	  // calculate start angle by choosing a random radian value between 0 and 2pi
 	  // radians. calculate end angle by adding to start angle 1.9 pi radians.
@@ -259,7 +259,7 @@
 	      this.radius >= ship.travelRadius - ship.radius &&
 	      this.radius <= ship.travelRadius + this.lineWidth + ship.radius);
 	};
-
+	
 	module.exports = Obstacle;
 
 
@@ -269,7 +269,7 @@
 
 	var Util = __webpack_require__(4),
 	    Constants = __webpack_require__(7);
-
+	
 	var Ship = function(options) {
 	  this.radius = 10;
 	  this.sideLength = 30;
@@ -283,53 +283,53 @@
 	  this.color = "#FFFFFF";
 	  this.game = options.game;
 	};
-
+	
 	Ship.prototype.draw = function(ctx) {
 	  var scaledX = this.center[0] + this.xPosition,
 	      scaledY = this.center[1] + this.yPosition;
-
+	
 	  ctx.beginPath();
 	  ctx.fillStyle = this.color;
 	  ctx.arc(scaledX, scaledY, this.radius, 0, 2 * Math.PI);
 	  ctx.fill();
 	};
-
+	
 	Ship.prototype.angle = function() {
 	  var hypotenuse = Util.hypotenuse(this.xPosition, this.yPosition);
 	  var angle = Math.acos(this.xPosition / hypotenuse);
-
+	
 	  angle = this.yPosition < 0 ? 2 * Math.PI - angle : angle;
 	  // since cosine only accounts for 0 to pi;
 	  return angle;
 	};
-
-
+	
+	
 	Ship.prototype.move = function(timeDelta) {
 	  var thetaScale = timeDelta / Constants.NORMAL_FRAME_TIME_DELTA;
 	  this.theta = (this.theta + this.deltaTheta * thetaScale) % (2 * Math.PI);
-
+	
 	  this.calculatePosition(this.theta);
 	};
-
-
+	
+	
 	Ship.prototype.calculatePosition = function (theta) {
 	  this.xPosition = this.travelRadius * Math.cos(theta);
 	  this.yPosition = this.travelRadius * Math.sin(theta);
 	};
-
+	
 	Ship.prototype.power = function (direction) {
 	  this.deltaTheta = direction === Constants.CLOCKWISE ?
 	  this.deltaTheta + Constants.HALF_DEGREE_IN_RAD :
 	  this.deltaTheta - Constants.HALF_DEGREE_IN_RAD;
-
+	
 	  if (this.deltaTheta >= this.maxSpeed) {
 	    this.deltaTheta = this.maxSpeed;
 	  } else if (this.deltaTheta <= - this.maxSpeed) {
 	    this.deltaTheta = -this.maxSpeed;
 	  }
 	};
-
-
+	
+	
 	module.exports = Ship;
 
 
@@ -344,7 +344,7 @@
 	    );
 	  }
 	};
-
+	
 	module.exports = Util;
 
 
@@ -356,53 +356,53 @@
 	var Game = __webpack_require__(1),
 	    Ship = __webpack_require__(3),
 	    Constants = __webpack_require__(7);
-
+	
 	var GameView = function(game, ctx) {
 	  this.game = game;
 	  this.ctx = ctx;
 	  this.ship = this.game.addShip();
 	};
-
+	
 	GameView.prototype.bindKeyHandlers = function () {
 	  var ship = this.ship;
-
+	
 	  key("left", function() { ship.power(Constants.CLOCKWISE); });
 	  key("right", function() { ship.power(Constants.COUNTER_CLOCKWISE); });
 	};
-
+	
 	GameView.prototype.start = function() {
 	  this.bindKeyHandlers();
 	  this.lastTime = 0;
 	  var that = this;
-
+	
 	  setTimeout(function() {
 	    that.addMusic();
 	    setInterval(function() {
 	      that.game.musicBounce();
 	      that.game.score.scaleScore();
 	    }, 1500);
-
+	
 	  }, 2300);
-
+	
 	  setInterval(this.game.reverse.bind(this.game), 6000);
 	  setInterval(this.game.addObstacles.bind(this.game), 3000);
 	  requestAnimationFrame(this.animate.bind(this));
 	};
-
+	
 	GameView.prototype.addMusic = function() {
-	  $('body').append('<embed src="music/background.mp3" autostart="true" loop="true" hidden="true">');
+	  document.getElementById('music').play();
 	};
-
+	
 	GameView.prototype.animate = function(time){
 	  var timeDelta = time - this.lastTime;
-
+	
 	  this.game.step(timeDelta);
 	  this.game.draw(this.ctx);
 	  this.lastTime = time;
-
+	
 	  requestAnimationFrame(this.animate.bind(this));
 	};
-
+	
 	module.exports = GameView;
 
 
@@ -416,7 +416,7 @@
 	  HALF_DEGREE_IN_RAD: 0.00872665,
 	  NORMAL_FRAME_TIME_DELTA: 1000/60
 	};
-
+	
 	module.exports = Constants;
 
 
@@ -430,15 +430,15 @@
 	  this.scoreScale = 1;
 	  this.highScore = 0;
 	};
-
+	
 	Score.prototype.increaseScore = function() {
 	  this.score += this.scoreScale;
 	};
-
+	
 	Score.prototype.scaleScore = function() {
 	  this.scoreScale ++;
 	};
-
+	
 	Score.prototype.draw = function(ctx) {
 	  ctx.font="20px Orbitron";
 	  ctx.textAlign="center";
@@ -448,13 +448,13 @@
 	  ctx.fillText("by patrick li", 20, 50);
 	  ctx.fillText("nero - the thrill (porter robinson remix)", 20, 100);
 	};
-
+	
 	Score.prototype.reset = function() {
 	  this.highScore = this.score > this.highScore ? this.score : this.highScore;
 	  this.score = 0;
 	  this.scoreScale = 1;
 	};
-
+	
 	module.exports = Score;
 
 
