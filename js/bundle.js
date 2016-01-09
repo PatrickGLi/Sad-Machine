@@ -390,7 +390,7 @@
 	};
 
 	GameView.prototype.addMusic = function() {
-	  $('body').append('<embed src="http://res.cloudinary.com/dlqjek68b/video/upload/v1452328059/background_ayvuyp.mp3" autostart="true" loop="true" hidden="true">');
+	  $('body').append('<embed src="music/background.mp3" autostart="true" loop="true" hidden="true">');
 	};
 
 	GameView.prototype.animate = function(time){
