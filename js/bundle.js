@@ -208,7 +208,7 @@
 	  this.game = options.game;
 	};
 	
-	Obstacle.COLORS = ["#ffcbd3", "#cc919a", "#fff7f8"];
+	Obstacle.COLORS = ["#ffcbd3", "#996d73", "#fff7f8"];
 	
 	Obstacle.prototype.draw = function(ctx) {
 	  ctx.beginPath();
