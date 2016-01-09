@@ -21,9 +21,6 @@ Ship.prototype.draw = function(ctx) {
 
   ctx.beginPath();
   ctx.fillStyle = this.color;
-  // ctx.rect(scaledX - this.sideLength / 2, scaledY - this.sideLength / 2, this.sideLength, this.sideLength);
-  // ctx.rotate(this.rotate);
-  // this.rotate = (this.rotate + 0.1) % 1;
   ctx.arc(scaledX, scaledY, this.radius, 0, 2 * Math.PI);
   ctx.fill();
 };
@@ -33,7 +30,7 @@ Ship.prototype.angle = function() {
   var angle = Math.acos(this.xPosition / hypotenuse);
 
   angle = this.yPosition < 0 ? 2 * Math.PI - angle : angle;
-  // since cosine only accounts for 0 to pi, add pi when y is negative
+  // since cosine only accounts for 0 to pi;
   return angle;
 };
 

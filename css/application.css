@@ -1,5 +1,12 @@
+body {
+  background-color: #E8E8E8;
+}
+
 #main {
   background-image: url("../images/sad_machine.jpg");
   background-size: 100% 100%;
   background-repeat: no-repeat;
+  border: 5px solid #b27f87;
+  margin: 0 auto;
+  display: block;
 }

@@ -7,15 +7,15 @@ var Obstacle = require('./obstacle'),
 var Game = function () {
   this.obstacles = [];
   this.ships = [];
-  this.score = new Score({ center: [Game.DIM_X / 2, 200] });
+  this.score = new Score({ center: [Game.DIM_X / 2, Game.DIM_Y / 2] });
   this.opposite = false;
 
   this.addObstacles();
 };
 
 Game.BG_COLOR = '#000000';
-Game.DIM_X = 1400;
-Game.DIM_Y = 900;
+Game.DIM_X = 1200;
+Game.DIM_Y = 700;
 Game.FPS = 32;
 
 Game.prototype.add = function (object) {

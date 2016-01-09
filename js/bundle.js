@@ -70,15 +70,15 @@
 	var Game = function () {
 	  this.obstacles = [];
 	  this.ships = [];
-	  this.score = new Score({ center: [Game.DIM_X / 2, 200] });
+	  this.score = new Score({ center: [Game.DIM_X / 2, Game.DIM_Y / 2] });
 	  this.opposite = false;
 	
 	  this.addObstacles();
 	};
 	
 	Game.BG_COLOR = '#000000';
-	Game.DIM_X = 1400;
-	Game.DIM_Y = 900;
+	Game.DIM_X = 1200;
+	Game.DIM_Y = 700;
 	Game.FPS = 32;
 	
 	Game.prototype.add = function (object) {
@@ -290,9 +290,6 @@
 	
 	  ctx.beginPath();
 	  ctx.fillStyle = this.color;
-	  // ctx.rect(scaledX - this.sideLength / 2, scaledY - this.sideLength / 2, this.sideLength, this.sideLength);
-	  // ctx.rotate(this.rotate);
-	  // this.rotate = (this.rotate + 0.1) % 1;
 	  ctx.arc(scaledX, scaledY, this.radius, 0, 2 * Math.PI);
 	  ctx.fill();
 	};
@@ -302,7 +299,7 @@
 	  var angle = Math.acos(this.xPosition / hypotenuse);
 	
 	  angle = this.yPosition < 0 ? 2 * Math.PI - angle : angle;
-	  // since cosine only accounts for 0 to pi, add pi when y is negative
+	  // since cosine only accounts for 0 to pi;
 	  return angle;
 	};
 	
@@ -431,6 +428,7 @@
 	  this.center = options.center;
 	  this.score = 0;
 	  this.scoreScale = 1;
+	  this.highScore = 0;
 	};
 	
 	Score.prototype.increaseScore = function() {
@@ -442,18 +440,20 @@
 	};
 	
 	Score.prototype.draw = function(ctx) {
-	  // debugger
-	  var that = this;
 	  ctx.font="20px Orbitron";
-	  ctx.fillText(that.score, this.center[0], this.center[1]);
-	  ctx.textAlign="center"; 
+	  ctx.textAlign="center";
+	  ctx.fillText(this.score, this.center[0], 200);
+	  ctx.textAlign="left";
+	  ctx.fillText(this.highScore, 160, 50);
+	  ctx.fillText("by patrick li", 20, 50);
+	  ctx.fillText("nero - the thrill (porter robinson remix)", 20, 100);
 	};
 	
 	Score.prototype.reset = function() {
+	  this.highScore = this.score > this.highScore ? this.score : this.highScore;
 	  this.score = 0;
 	  this.scoreScale = 1;
 	};
-	
 	
 	module.exports = Score;
 
