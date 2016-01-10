@@ -13,10 +13,8 @@ var Game = function () {
   this.addObstacles();
 };
 
-Game.BG_COLOR = '#000000';
 Game.DIM_X = 1200;
 Game.DIM_Y = 700;
-Game.FPS = 32;
 
 Game.prototype.add = function (object) {
   if (object instanceof Obstacle) {

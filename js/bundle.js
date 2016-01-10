@@ -76,10 +76,8 @@
 	  this.addObstacles();
 	};
 	
-	Game.BG_COLOR = '#000000';
 	Game.DIM_X = 1200;
 	Game.DIM_Y = 700;
-	Game.FPS = 32;
 	
 	Game.prototype.add = function (object) {
 	  if (object instanceof Obstacle) {
@@ -281,7 +279,6 @@
 	  this.deltaTheta = 0;
 	  this.maxSpeed = 0.03;
 	  this.color = "#FFFFFF";
-	  this.game = options.game;
 	};
 	
 	Ship.prototype.draw = function(ctx) {

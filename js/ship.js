@@ -12,7 +12,6 @@ var Ship = function(options) {
   this.deltaTheta = 0;
   this.maxSpeed = 0.03;
   this.color = "#FFFFFF";
-  this.game = options.game;
 };
 
 Ship.prototype.draw = function(ctx) {
