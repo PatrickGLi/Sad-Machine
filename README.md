@@ -1,10 +1,10 @@
 #Sad Machine
 
-A relaxing, entrancing game inspired by minimal design. As the music emits
+An entrancing game inspired by minimal design. As the music emits
 sound, the player maneuvers between sound waves using the left and
 right arrow keys.
 
-Written in JavaScript using HTML5's Canvas.
+Written in JavaScript using HTML5's Canvas. Enjoy!
 
 [Sad Machine][link]
 
