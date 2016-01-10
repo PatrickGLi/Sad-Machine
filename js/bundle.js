@@ -70,7 +70,7 @@
 	var Game = function () {
 	  this.obstacles = [];
 	  this.ships = [];
-	  this.score = new Score({ center: [Game.DIM_X / 2, Game.DIM_Y / 2] });
+	  this.score = new Score({ center: [Game.DIM_X / 2, Game.DIM_Y / 2]});
 	  this.opposite = false;
 	
 	  this.addObstacles();
@@ -443,8 +443,8 @@
 	  ctx.font="20px Orbitron";
 	  ctx.textAlign="center";
 	  ctx.fillText(this.score, this.center[0], 200);
+	  ctx.fillText(this.highScore, this.center[0], 100);
 	  ctx.textAlign="left";
-	  ctx.fillText(this.highScore, 160, 50);
 	  ctx.fillText("by patrick li", 20, 50);
 	  ctx.fillText("nero - the thrill (porter robinson remix)", 20, 100);
 	};

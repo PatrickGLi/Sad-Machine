@@ -7,7 +7,7 @@ var Obstacle = require('./obstacle'),
 var Game = function () {
   this.obstacles = [];
   this.ships = [];
-  this.score = new Score({ center: [Game.DIM_X / 2, Game.DIM_Y / 2] });
+  this.score = new Score({ center: [Game.DIM_X / 2, Game.DIM_Y / 2]});
   this.opposite = false;
 
   this.addObstacles();
