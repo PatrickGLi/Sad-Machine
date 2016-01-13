@@ -1,5 +1,7 @@
 #Sad Machine
 
+[![Screenshot](/assets/images/screenshot.png)](//github.com/PatrickLi727/Sad-Machine/)
+
 An entrancing game inspired by minimal design. As the music emits
 sound, the player maneuvers between sound waves using the left and
 right arrow keys to move clockwise and counter-clockwise.
